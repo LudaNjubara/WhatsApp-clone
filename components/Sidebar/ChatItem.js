@@ -15,14 +15,15 @@ function ChatItem({ chatId, user, participants, styles }) {
   const recipient = recipientSnapshot?.docs?.[0]?.data();
 
   // last message
+  const lastMessageQuery = query(
+    collection(database, `chats/${chatId}/messages`),
+    orderBy("timestamp", "desc"),
+    limit(1)
+  );
+  const [lastMessageSnapshot] = useCollection(lastMessageQuery);
+  const lastMessage = lastMessageSnapshot?.docs?.[0]?.data().messageText;
+
   const showLastMessage = () => {
-    const lastMessageQuery = query(
-      collection(database, `chats/${chatId}/messages`),
-      orderBy("timestamp", "desc"),
-      limit(1)
-    );
-    const [lastMessageSnapshot, loading] = useCollection(lastMessageQuery);
-    const lastMessage = lastMessageSnapshot?.docs?.[0]?.data().messageText;
     return truncate(lastMessage);
   };
 
