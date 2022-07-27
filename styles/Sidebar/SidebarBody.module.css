@@ -1,0 +1,83 @@
+.sidebarBodyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.createChatButton {
+  width: 100%;
+  background-color: var(--primary-accent);
+  padding: var(--button-padding-medium);
+  border-radius: var(--border-radius-small);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-default-small);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.createChatButton:hover {
+  filter: brightness(1.1);
+}
+
+.createChatInfo {
+  display: flex;
+  gap: 5px;
+  padding: var(--padding-small) 0;
+}
+
+.createChatInput {
+  flex-grow: 1;
+  padding: var(--button-padding-small) var(--button-padding-medium);
+  border: none;
+  border-radius: var(--border-radius-small);
+  outline: 1px solid var(--primary-accent);
+}
+
+.createChatInfo .createChatButton {
+  width: fit-content;
+}
+
+.createChatButton.isCloseButton {
+  background-color: var(--danger-accent);
+}
+
+.chatsList {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chatsListItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--button-padding-medium) var(--button-padding-large);
+  border-radius: var(--border-radius-small);
+  background-color: var(--secondary-background-accent);
+  cursor: pointer;
+  transition: filter 0.2s linear;
+}
+
+.chatsListItem:hover {
+  filter: brightness(1.1);
+}
+
+.chatsListItemImage {
+  border-radius: 50%;
+}
+
+.chatsListItemInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatsListItemInfoUsername {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h6);
+  letter-spacing: 0.3px;
+}
+
+.chatsListItemInfoMessage {
+  font-size: var(--font-size-default-small);
+  color: var(--secondary-text-accent);
+  opacity: 0.8;
+}

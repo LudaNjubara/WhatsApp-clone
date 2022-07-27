@@ -1,0 +1,22 @@
+#mainWindowWrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+  max-height: 800px;
+  border-radius: var(--border-radius-medium);
+  overflow: hidden;
+}
+
+#sidebarWrapper {
+  flex-basis: 400px;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--primary-accent);
+}
+
+#chatWrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}

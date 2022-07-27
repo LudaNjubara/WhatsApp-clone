@@ -1,0 +1,36 @@
+.loginWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border-radius: var(--border-radius-small);
+  padding: var(--padding-large) var(--padding-medium);
+  background-color: var(--primary-background-accent);
+}
+
+.welcomeTitle {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-default);
+  color: var(--primary-text-accent);
+}
+
+.welcomeDescription {
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
+  color: var(--secondary-text-accent);
+}
+
+.signInIcon {
+  width: 25px;
+  height: 25px;
+}
+
+.signInButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: var(--button-padding-medium) var(--button-padding-large);
+  font-weight: var(--font-weight-default);
+  cursor: pointer;
+}

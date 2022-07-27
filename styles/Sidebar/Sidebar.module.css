@@ -1,0 +1,23 @@
+#sidebarHeaderWrapper {
+  padding: var(--padding-small) var(--padding-medium);
+  background-color: var(--primary-background-accent);
+  box-shadow: 0 8px 4px -4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+#sidebarBodyWrapper {
+  height: 100%;
+  padding: var(--padding-small) var(--padding-medium);
+  background-color: var(--primary-background-accent);
+  overflow-y: auto;
+}
+
+#sidebarBodyWrapper::-webkit-scrollbar {
+  width: 8px;
+  background: none;
+}
+
+#sidebarBodyWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-background-accent);
+  border-radius: var(--border-radius-large);
+}

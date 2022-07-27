@@ -1,0 +1,82 @@
+.chatHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.personContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileImage {
+  border-radius: 50%;
+}
+
+.personUsername {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-text-accent);
+}
+
+.personLastSeen {
+  font-size: var(--font-size-default-small);
+  font-weight: var(--font-weight-default);
+  color: var(--secondary-text-accent);
+}
+
+.optionsContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.optionsButton {
+  position: relative;
+  padding: var(--button-padding-medium);
+  border-radius: var(--border-radius-small);
+  background: none;
+  transition: background 0.2s linear;
+  cursor: pointer;
+}
+
+.optionsButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.optionsIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.threeDotOptionsContainer {
+  position: absolute;
+  top: 30px;
+  right: -15px;
+  padding: var(--padding-small);
+}
+
+.threeDotOptionsList {
+  flex-direction: column;
+  gap: 5px;
+  width: max-content;
+  background-color: var(--secondary-background-accent);
+  padding: var(--button-padding-medium);
+  border-radius: var(--border-radius-small);
+}
+
+.optionItemButton {
+  width: 100%;
+  padding: var(--button-padding-medium) var(--button-padding-large);
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-default);
+}
+
+.optionItemButton.signOut {
+  background-color: var(--danger-accent);
+}
+
+.optionItemButton:hover {
+  filter: brightness(1.1);
+}
