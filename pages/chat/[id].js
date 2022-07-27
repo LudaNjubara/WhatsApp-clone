@@ -10,7 +10,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 
 import styles from "../../styles/MainWindow/MainWindow.module.css";
 
-function chatRoom({ chat, messages }) {
+function ChatRoom({ chat, messages }) {
   const [user] = useAuthState(auth);
 
   return (
@@ -31,7 +31,7 @@ function chatRoom({ chat, messages }) {
   );
 }
 
-export default chatRoom;
+export default ChatRoom;
 
 export async function getServerSideProps(context) {
   const chatRoomFirestoreRef = doc(database, `chats/${context.query.id}`);
