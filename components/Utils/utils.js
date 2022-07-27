@@ -5,4 +5,8 @@ const getRecipientEmail = (user, participantsArray) => {
   return recipientEmail;
 };
 
-export { getRecipientEmail };
+const truncate = (string, length = 25) => {
+  return string?.length > length ? string?.substring(0, length) + "..." : string;
+};
+
+export { getRecipientEmail, truncate };

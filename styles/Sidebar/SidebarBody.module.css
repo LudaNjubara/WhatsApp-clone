@@ -41,6 +41,18 @@
   background-color: var(--danger-accent);
 }
 
+.chatsContainerTitle {
+  text-align: center;
+  padding-bottom: var(--padding-small);
+  color: var(--secondary-text-accent);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.skeletonLoadingItem {
+  margin: 5px 0;
+}
+
 .chatsList {
   flex-direction: column;
   gap: 10px;

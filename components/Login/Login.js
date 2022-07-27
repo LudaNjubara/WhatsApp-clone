@@ -45,7 +45,14 @@ function Login() {
           animate={{ y: 0, opacity: 1 }}
         >
           <div className={styles.logoContainer}>
-            <Image className={styles.logo} src="/images/logo.webp" alt="logo" width="140" height="100" />
+            <Image
+              className={styles.logo}
+              src="/images/logo.webp"
+              alt="logo"
+              width="140"
+              height="100"
+              priority={true}
+            />
           </div>
           <h2 className={styles.welcomeTitle}>Welcome to WhatsApp</h2>
           <p className={styles.welcomeDescription}>Sign in to continue using WhatsApp</p>

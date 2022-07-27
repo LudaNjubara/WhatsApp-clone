@@ -64,12 +64,10 @@ function ChatBody({ user, messages }) {
           />
         );
       });
-    } else {
-      if (messages) {
-        return JSON.parse(messages).map((message) => {
-          <Message key={message.id} user={user} sender={message.sender} message={message} styles={styles} />;
-        });
-      }
+    } else if (messages) {
+      return JSON.parse(messages).map((message) => {
+        <Message key={message.id} user={user} sender={message.sender} message={message} styles={styles} />;
+      });
     }
   };
 

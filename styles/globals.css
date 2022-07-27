@@ -70,7 +70,7 @@ img {
 }
 
 a {
-  color: var(--primary-accent);
+  color: var(--terniary-accent);
   text-decoration: none;
 }
 

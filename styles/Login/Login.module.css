@@ -12,12 +12,15 @@
   font-size: var(--font-size-h2);
   font-weight: var(--font-weight-default);
   color: var(--primary-text-accent);
+  text-align: center;
+  line-height: 1.1;
 }
 
 .welcomeDescription {
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
   color: var(--secondary-text-accent);
+  text-align: center;
 }
 
 .signInIcon {
@@ -31,6 +34,14 @@
   gap: 12px;
   margin-top: 20px;
   padding: var(--button-padding-medium) var(--button-padding-large);
+  border-radius: var(--border-radius-small);
   font-weight: var(--font-weight-default);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.07);
   cursor: pointer;
+  transition: box-shadow 0.2s linear;
+}
+
+.signInButton:hover,
+.signInButton:focus {
+  box-shadow: unset;
 }

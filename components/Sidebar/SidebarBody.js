@@ -3,12 +3,14 @@ import validator from "email-validator";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { addDoc, collection, query, where } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import { database } from "../firebaseConfig";
 import ChatItem from "./ChatItem";
 
 import { AiOutlineSend } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
+import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Sidebar/SidebarBody.module.css";
 
 function SidebarBody({ user }) {
@@ -94,18 +96,25 @@ function SidebarBody({ user }) {
       </div>
 
       <div className={styles.chatsContainer}>
+        <h5 className={styles.chatsContainerTitle}>Conversations</h5>
         <ul className={styles.chatsList}>
-          {chatsSnapshot?.docs.map((chat) => {
-            return (
-              <ChatItem
-                key={chat.id}
-                chatId={chat.id}
-                user={user}
-                participants={chat.data().participants}
-                styles={styles}
-              />
-            );
-          })}
+          {loading ? (
+            <SkeletonTheme highlightColor="#5a5a5a" baseColor="#3d3d3d" height={60} duration={0.6}>
+              <Skeleton count={8} className={styles.skeletonLoadingItem} />
+            </SkeletonTheme>
+          ) : (
+            chatsSnapshot?.docs.map((chat) => {
+              return (
+                <ChatItem
+                  key={chat.id}
+                  chatId={chat.id}
+                  user={user}
+                  participants={chat.data().participants}
+                  styles={styles}
+                />
+              );
+            })
+          )}
         </ul>
       </div>
     </div>

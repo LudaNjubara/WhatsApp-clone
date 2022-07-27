@@ -1,17 +1,30 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { collection, query, where } from "firebase/firestore";
+import { collection, limit, orderBy, query, where } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import { database } from "../firebaseConfig";
-import { getRecipientEmail } from "../Utils/utils";
+import { getRecipientEmail, truncate } from "../Utils/utils";
 
 function ChatItem({ chatId, user, participants, styles }) {
+  const router = useRouter();
+
   const recipientEmail = getRecipientEmail(user, participants);
   const recipientFirestoreRef = query(collection(database, "users"), where("email", "==", recipientEmail));
   const [recipientSnapshot, loading] = useCollection(recipientFirestoreRef);
   const recipient = recipientSnapshot?.docs?.[0]?.data();
-  const router = useRouter();
+
+  // last message
+  const showLastMessage = () => {
+    const lastMessageQuery = query(
+      collection(database, `chats/${chatId}/messages`),
+      orderBy("timestamp", "desc"),
+      limit(1)
+    );
+    const [lastMessageSnapshot, loading] = useCollection(lastMessageQuery);
+    const lastMessage = lastMessageSnapshot?.docs?.[0]?.data().messageText;
+    return truncate(lastMessage);
+  };
 
   const openChat = () => {
     router.push({
@@ -34,7 +47,7 @@ function ChatItem({ chatId, user, participants, styles }) {
         <h5 className={styles.chatsListItemInfoUsername}>
           {recipient?.displayName ? recipient.displayName : recipientEmail}
         </h5>
-        <p className={styles.chatsListItemInfoMessage}>Some message over here...</p>
+        <p className={styles.chatsListItemInfoMessage}>{showLastMessage()}</p>
       </div>
     </li>
   );

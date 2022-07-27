@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import TimeAgo from "react-timeago";
 import { motion, AnimatePresence } from "framer-motion";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import { getRecipientEmail } from "../Utils/utils";
 
@@ -12,6 +13,7 @@ import { collection, query, where } from "firebase/firestore";
 import { database } from "../firebaseConfig";
 
 import { BsFillChatLeftTextFill, BsThreeDotsVertical } from "react-icons/bs";
+import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Chat/ChatHeader.module.css";
 
 function ChatHeader({ user, chat }) {
@@ -40,7 +42,24 @@ function ChatHeader({ user, chat }) {
           alt="profile"
         />
         <div className={styles.personInfo}>
-          <h5 className={styles.personUsername}>{recipientEmail}</h5>
+          <h5 className={styles.personUsername}>
+            {loading ? (
+              <SkeletonTheme
+                highlightColor="#5a5a5a"
+                baseColor="#3d3d3d"
+                height={30}
+                width={200}
+                duration={0.6}
+              >
+                <Skeleton />
+              </SkeletonTheme>
+            ) : recipient?.displayName ? (
+              recipient.displayName
+            ) : (
+              recipientEmail
+            )}
+          </h5>
+
           {recipientSnapshot ? (
             <p className={styles.personLastSeen}>
               Last seen:{" "}
@@ -51,7 +70,9 @@ function ChatHeader({ user, chat }) {
               )}
             </p>
           ) : (
-            "Loading Last active..."
+            <SkeletonTheme highlightColor="#5a5a5a" baseColor="#3d3d3d" width={100} duration={0.6}>
+              <Skeleton />
+            </SkeletonTheme>
           )}
         </div>
       </div>
