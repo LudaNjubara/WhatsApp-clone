@@ -20,7 +20,9 @@ function SidebarHeader({ user }) {
   return (
     <header className={styles.sidebarHeaderContainer}>
       <div className={styles.profileContainer}>
-        <Image className={styles.profileImage} src={user?.photoURL} width={45} height={45} alt="profile" />
+        <div className={styles.personImageContainer}>
+          <Image className={styles.profileImage} src={user?.photoURL} alt="profile" layout="fill" />
+        </div>
         <h5 className={styles.profileUsername}>{user?.displayName}</h5>
       </div>
 

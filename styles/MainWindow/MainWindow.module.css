@@ -20,3 +20,33 @@
   display: flex;
   flex-direction: column;
 }
+
+/* small mobile media query */
+@media (max-width: 768px) {
+  #mainWindowWrapper {
+    display: flex;
+    height: 100vh;
+    border-radius: unset;
+    max-height: unset;
+  }
+
+  #sidebarWrapper {
+    flex-basis: 100%;
+    border-right: none;
+  }
+
+  #chatWrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.1, 0.81, 0, 0.99);
+    z-index: 100;
+  }
+
+  #chatWrapper.active {
+    transform: translateX(0);
+  }
+}

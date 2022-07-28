@@ -9,12 +9,13 @@ import { database } from "../firebaseConfig";
 import ChatItem from "./ChatItem";
 
 import { AiOutlineSend } from "react-icons/ai";
+import { BsPlusLg } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Sidebar/SidebarBody.module.css";
 
-function SidebarBody({ user }) {
-  const createChatRef = useRef(null);
+function SidebarBody({ user, showChat }) {
+  const createChatInputRef = useRef(null);
   const [createChatInputVisible, setCreateChatInputVisible] = useState(false);
   const chatsFirestoreRef = query(
     collection(database, "chats"),
@@ -23,9 +24,12 @@ function SidebarBody({ user }) {
   const [chatsSnapshot, loading] = useCollection(chatsFirestoreRef);
 
   const toggleCreateChatInputVisibility = () => {
+    const createChatIcon = document.querySelector(`#${styles.createChatIconToRotate}`);
+    createChatIcon && createChatIcon.classList.toggle(styles.active);
+
     setCreateChatInputVisible((currentValue) => !currentValue);
     setTimeout(() => {
-      createChatInputVisible ? createChatRef.current.blur() : createChatRef.current.focus();
+      createChatInputVisible ? createChatInputRef.current.blur() : createChatInputRef.current.focus();
     }, 50);
   };
 
@@ -39,7 +43,7 @@ function SidebarBody({ user }) {
   };
 
   const createChat = () => {
-    const recipientEmail = createChatRef.current.value;
+    const recipientEmail = createChatInputRef.current.value;
 
     if (chatAlreadyExists(recipientEmail)) {
       alert("Chat already exists");
@@ -61,7 +65,8 @@ function SidebarBody({ user }) {
     <div className={styles.sidebarBodyContainer}>
       <div className={styles.createChatContainer}>
         <button type="button" className={styles.createChatButton} onClick={toggleCreateChatInputVisibility}>
-          Start chatting
+          <BsPlusLg className={styles.createChatIcon} id={styles.createChatIconToRotate} />
+          <span className={styles.createChatText}>Start chatting</span>
         </button>
 
         <AnimatePresence>
@@ -69,13 +74,13 @@ function SidebarBody({ user }) {
             <motion.div
               className={styles.createChatInfo}
               key="createChatInfo"
-              initial={{ y: -20, opacity: 0 }}
+              initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
+              exit={{ y: -10, opacity: 0 }}
               transition={{ type: "ease-out" }}
             >
               <input
-                ref={createChatRef}
+                ref={createChatInputRef}
                 type="email"
                 placeholder="Enter person's email..."
                 className={styles.createChatInput}
@@ -111,6 +116,7 @@ function SidebarBody({ user }) {
                   user={user}
                   participants={chat.data().participants}
                   styles={styles}
+                  showChat={showChat}
                 />
               );
             })

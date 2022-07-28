@@ -6,13 +6,13 @@ import ChatBody from "./ChatBody";
 
 import styles from "../../styles/Chat/Chat.module.css";
 
-function Chat({ chat, messages }) {
+function Chat({ chat, messages, hideChat }) {
   const [user] = useAuthState(auth);
 
   return (
     <>
       <div id={styles.chatHeaderWrapper}>
-        <ChatHeader user={user} chat={chat} />
+        <ChatHeader user={user} chat={chat} hideChat={hideChat} />
       </div>
       <div id={styles.chatBodyWrapper}>
         <ChatBody user={user} chat={chat} messages={messages} />

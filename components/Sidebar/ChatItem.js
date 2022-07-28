@@ -6,7 +6,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { database } from "../firebaseConfig";
 import { getRecipientEmail, truncate } from "../Utils/utils";
 
-function ChatItem({ chatId, user, participants, styles }) {
+function ChatItem({ chatId, user, participants, showChat, styles }) {
   const router = useRouter();
 
   const recipientEmail = getRecipientEmail(user, participants);
@@ -28,6 +28,8 @@ function ChatItem({ chatId, user, participants, styles }) {
   };
 
   const openChat = () => {
+    showChat && showChat();
+
     router.push({
       pathname: `/chat/${chatId}`,
       query: { recipientPhotoURL: recipient?.photoURL },

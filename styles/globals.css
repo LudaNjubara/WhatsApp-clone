@@ -25,6 +25,7 @@
   --secondary-background-accent: #f8f8f8;
 
   /* Font Size */
+  --font-size-default-xsmall: 0.7rem;
   --font-size-default-small: 0.8rem;
   --font-size-default: 1rem;
   --font-size-default-large: 1.25rem;
@@ -81,6 +82,7 @@ ul {
 
 svg {
   display: block;
+  pointer-events: none;
 }
 
 button {
@@ -120,6 +122,19 @@ h5 {
   width: 100vw;
   height: 100vh;
   padding: var(--padding-large);
+}
+/* small laptop media query */
+@media screen and (max-width: 992px) {
+  #pageWrapper {
+    padding: var(--padding-medium);
+  }
+}
+
+/* small mobile media query */
+@media screen and (max-width: 768px) {
+  #pageWrapper {
+    padding: unset;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -9,6 +9,7 @@
   height: 100%;
   padding: var(--padding-small) var(--padding-medium);
   background-color: var(--primary-background-accent);
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -20,4 +21,20 @@
 #sidebarBodyWrapper::-webkit-scrollbar-thumb {
   background-color: var(--secondary-background-accent);
   border-radius: var(--border-radius-large);
+}
+
+/* small mobile media query */
+@media screen and (max-width: 768px) {
+  #sidebarBodyWrapper {
+    padding: var(--padding-medium) var(--padding-small);
+  }
+
+  #sidebarBodyWrapper::-webkit-scrollbar {
+    width: 5px;
+    background: none;
+  }
+
+  #sidebarHeaderWrapper {
+    padding: var(--padding-small) var(--padding-small);
+  }
 }

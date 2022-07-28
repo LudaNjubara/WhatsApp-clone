@@ -4,14 +4,43 @@
   align-items: center;
 }
 
+.chatHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.backButton {
+  display: none;
+  place-items: center;
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  background: none;
+  transition: background 0.2s linear;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .personContainer {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.profileImage {
+.personImageContainer {
+  position: relative;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
+  overflow: hidden;
+}
+
+.profileImage {
+  object-fit: cover;
 }
 
 .personUsername {
@@ -79,4 +108,30 @@
 
 .optionItemButton:hover {
   filter: brightness(1.1);
+}
+
+/* mobile media query */
+@media screen and (max-width: 768px) {
+  .backButton {
+    display: grid;
+  }
+}
+
+/* small mobile media query */
+@media screen and (max-width: 512px) {
+  .personImageContainer {
+    width: 35px;
+    height: 35px;
+  }
+
+  .personLastSeen {
+    font-size: var(--font-size-default-small);
+  }
+}
+
+/* extra small mobile media query */
+@media screen and (max-width: 400px) {
+  .personLastSeen {
+    font-size: var(--font-size-default-xsmall);
+  }
 }

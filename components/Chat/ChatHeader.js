@@ -1,22 +1,22 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, query, where } from "firebase/firestore";
 import TimeAgo from "react-timeago";
 import { motion, AnimatePresence } from "framer-motion";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import { getRecipientEmail } from "../Utils/utils";
 
-import { useCollection } from "react-firebase-hooks/firestore";
-import { collection, query, where } from "firebase/firestore";
-
 import { database } from "../firebaseConfig";
 
-import { BsFillChatLeftTextFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../../styles/Chat/ChatHeader.module.css";
 
-function ChatHeader({ user, chat }) {
+function ChatHeader({ user, chat, hideChat }) {
   const router = useRouter();
   const { recipientPhotoURL } = router.query;
   const [threeDotOptionsVisible, setThreeDotsOptionsVisible] = useState(false);
@@ -33,54 +33,58 @@ function ChatHeader({ user, chat }) {
 
   return (
     <header className={styles.chatHeaderContainer}>
-      <div className={styles.personContainer}>
-        <Image
-          className={styles.profileImage}
-          src={recipientPhotoURL ? recipientPhotoURL : "/images/default-profile-pic.webp"}
-          width={45}
-          height={45}
-          alt="profile"
-        />
-        <div className={styles.personInfo}>
-          <h5 className={styles.personUsername}>
-            {loading ? (
-              <SkeletonTheme
-                highlightColor="#5a5a5a"
-                baseColor="#3d3d3d"
-                height={30}
-                width={200}
-                duration={0.6}
-              >
+      <div className={styles.chatHeaderLeft}>
+        <button className={styles.backButton} onClick={hideChat}>
+          <FaArrowLeft className={styles.optionsIcon} />
+        </button>
+
+        <div className={styles.personContainer}>
+          <div className={styles.personImageContainer}>
+            <Image
+              className={styles.profileImage}
+              src={recipientPhotoURL ? recipientPhotoURL : "/images/default-profile-pic.webp"}
+              alt="profile"
+              layout="fill"
+            />
+          </div>
+          <div className={styles.personInfo}>
+            <h5 className={styles.personUsername}>
+              {loading ? (
+                <SkeletonTheme
+                  highlightColor="#5a5a5a"
+                  baseColor="#3d3d3d"
+                  height={30}
+                  width={200}
+                  duration={0.6}
+                >
+                  <Skeleton />
+                </SkeletonTheme>
+              ) : recipient?.displayName ? (
+                recipient.displayName
+              ) : (
+                recipientEmail
+              )}
+            </h5>
+
+            {recipientSnapshot ? (
+              <p className={styles.personLastSeen}>
+                Last seen:{" "}
+                {recipient?.lastSeen?.toDate() ? (
+                  <TimeAgo date={recipient?.lastSeen?.toDate()} minPeriod={30} />
+                ) : (
+                  "Not available"
+                )}
+              </p>
+            ) : (
+              <SkeletonTheme highlightColor="#5a5a5a" baseColor="#3d3d3d" width={100} duration={0.6}>
                 <Skeleton />
               </SkeletonTheme>
-            ) : recipient?.displayName ? (
-              recipient.displayName
-            ) : (
-              recipientEmail
             )}
-          </h5>
-
-          {recipientSnapshot ? (
-            <p className={styles.personLastSeen}>
-              Last seen:{" "}
-              {recipient?.lastSeen?.toDate() ? (
-                <TimeAgo date={recipient?.lastSeen?.toDate()} minPeriod={30} />
-              ) : (
-                "Not available"
-              )}
-            </p>
-          ) : (
-            <SkeletonTheme highlightColor="#5a5a5a" baseColor="#3d3d3d" width={100} duration={0.6}>
-              <Skeleton />
-            </SkeletonTheme>
-          )}
+          </div>
         </div>
       </div>
 
       <div className={styles.optionsContainer}>
-        <div type="button" className={styles.optionsButton}>
-          <BsFillChatLeftTextFill className={styles.optionsIcon} />
-        </div>
         <div type="button" className={styles.optionsButton} onClick={toggleThreeDotOptionsVisibility}>
           <BsThreeDotsVertical className={styles.optionsIcon} />
           <AnimatePresence>

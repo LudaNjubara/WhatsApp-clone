@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { auth, database } from "../../components/firebaseConfig";
 import { getRecipientEmail } from "../../components/Utils/utils";
@@ -12,6 +14,44 @@ import styles from "../../styles/MainWindow/MainWindow.module.css";
 
 function ChatRoom({ chat, messages }) {
   const [user] = useAuthState(auth);
+  const [isMobile, setIsMobile] = useState(!!(window.innerWidth < 768));
+  const [isChatVisible, setIsChatVisible] = useState(true);
+  let chatVariants;
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      if (isMobile) {
+        setIsMobile(false);
+        setIsChatVisible(true);
+      }
+    } else {
+      if (!isMobile) {
+        setIsMobile(true);
+      }
+    }
+  });
+
+  if (isMobile) {
+    chatVariants = {
+      hidden: { x: "100vw" },
+      visible: {
+        x: 0,
+        transition: {
+          duration: 0.3,
+        },
+      },
+      exit: { x: "100vw", transition: { duration: 0.3 } },
+    };
+  }
+
+  const hideChat = () => {
+    setIsChatVisible(false);
+  };
+
+  const showChat = () => {
+    console.log("showChat");
+    setIsChatVisible(true);
+  };
 
   return (
     <>
@@ -21,11 +61,22 @@ function ChatRoom({ chat, messages }) {
 
       <div id={styles.mainWindowWrapper}>
         <section id={styles.sidebarWrapper}>
-          <Sidebar />
+          <Sidebar showChat={showChat} />
         </section>
-        <section id={styles.chatWrapper}>
-          <Chat chat={chat} messages={messages} />
-        </section>
+
+        <AnimatePresence>
+          {isChatVisible && (
+            <motion.section
+              id={styles.chatWrapper}
+              variants={chatVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <Chat chat={chat} messages={messages} hideChat={hideChat} />
+            </motion.section>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

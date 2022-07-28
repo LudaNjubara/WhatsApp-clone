@@ -11,12 +11,16 @@
   background-color: var(--primary-background-accent);
 }
 
-#chatBodyWrapper::-webkit-scrollbar {
-  width: 8px;
-  background: none;
+/* small mobile media query */
+@media screen and (max-width: 768px) {
+  #chatBodyWrapper {
+    padding: 5px var(--padding-small) var(--padding-small);
+  }
 }
 
-#chatBodyWrapper::-webkit-scrollbar-thumb {
-  background-color: var(--secondary-background-accent);
-  border-radius: var(--border-radius-large);
+/* small mobile media query */
+@media screen and (max-width: 512px) {
+  #chatHeaderWrapper {
+    padding: var(--padding-small) var(--padding-small);
+  }
 }

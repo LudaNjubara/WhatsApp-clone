@@ -7,7 +7,7 @@ import SidebarBody from "./SidebarBody";
 
 import styles from "../../styles/Sidebar/Sidebar.module.css";
 
-function Sidebar() {
+function Sidebar({ showChat }) {
   const [user] = useAuthState(auth);
 
   return (
@@ -16,7 +16,7 @@ function Sidebar() {
         <SidebarHeader user={user} />
       </div>
       <div id={styles.sidebarBodyWrapper}>
-        <SidebarBody user={user} />
+        <SidebarBody user={user} showChat={showChat} />
       </div>
     </>
   );

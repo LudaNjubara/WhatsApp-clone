@@ -1,11 +1,18 @@
 .sidebarBodyContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 50px;
 }
 
+.createChatContainer {
+  text-align: center;
+}
+
 .createChatButton {
   width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
   background-color: var(--primary-accent);
   padding: var(--button-padding-medium);
   border-radius: var(--border-radius-small);
@@ -17,6 +24,22 @@
 
 .createChatButton:hover {
   filter: brightness(1.1);
+}
+
+.createChatIcon {
+  width: 20px;
+  height: 20px;
+}
+
+#createChatIconToRotate {
+  display: none;
+  width: 22px;
+  height: 22px;
+  transition: transform 0.3s cubic-bezier(0.55, -0.55, 0.61, 1.69);
+}
+
+#createChatIconToRotate.active {
+  transform: rotate(45deg);
 }
 
 .createChatInfo {
@@ -92,4 +115,39 @@
   font-size: var(--font-size-default-small);
   color: var(--secondary-text-accent);
   opacity: 0.8;
+}
+
+/* mobile media query */
+@media screen and (max-width: 768px) {
+  .sidebarBodyContainer {
+    gap: 30px;
+  }
+
+  .createChatButton.isCloseButton {
+    display: none;
+  }
+
+  .createChatButton:first-child {
+    position: fixed;
+    bottom: var(--padding-small);
+    right: var(--padding-small);
+    display: grid;
+    place-items: center;
+    padding: unset;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+
+  .createChatText {
+    display: none;
+  }
+
+  #createChatIconToRotate {
+    display: initial;
+  }
+}
+
+/* small mobile media query */
+@media screen and (max-width: 512px) {
 }

@@ -6,7 +6,7 @@ function EmptyChat() {
   return (
     <div className={styles.emptyChatContainer}>
       <div className={styles.emptyChatImageContainer}>
-        <Image src={"/images/start-convo.svg"} alt="Start a conversation" layout="fill" />
+        <Image src={"/images/start-convo.svg"} alt="Start a conversation" layout="fill" priority={true} />
       </div>
       <h3 className={styles.emptyChatText}>Open conversation to view messages</h3>
     </div>
