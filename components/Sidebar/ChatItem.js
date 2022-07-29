@@ -28,11 +28,13 @@ function ChatItem({ chatId, user, participants, showChat, styles }) {
   };
 
   const openChat = () => {
-    showChat && showChat();
-
     router.push({
       pathname: `/chat/${chatId}`,
       query: { recipientPhotoURL: recipient?.photoURL },
+    });
+
+    router.events.on("routeChangeComplete", () => {
+      showChat && showChat();
     });
   };
 

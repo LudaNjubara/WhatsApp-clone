@@ -16,6 +16,7 @@ function ChatRoom({ chat, messages }) {
   const [user] = useAuthState(auth);
   const [isMobile, setIsMobile] = useState(!!(window.innerWidth < 768));
   const [isChatVisible, setIsChatVisible] = useState(true);
+  const parsedChat = chat && JSON.parse(chat);
   let chatVariants;
 
   window.addEventListener("resize", () => {
@@ -49,14 +50,14 @@ function ChatRoom({ chat, messages }) {
   };
 
   const showChat = () => {
-    console.log("showChat");
+    console.log("showChat", window.location.pathname);
     setIsChatVisible(true);
   };
 
   return (
     <>
       <Head>
-        <title>Chat with {getRecipientEmail(user, chat?.participants)}</title>
+        <title>Chat with {getRecipientEmail(user, parsedChat?.participants)}</title>
       </Head>
 
       <div id={styles.mainWindowWrapper}>
@@ -73,7 +74,7 @@ function ChatRoom({ chat, messages }) {
               animate="visible"
               exit="exit"
             >
-              <Chat chat={chat} messages={messages} hideChat={hideChat} />
+              <Chat chat={parsedChat} messages={messages} hideChat={hideChat} />
             </motion.section>
           )}
         </AnimatePresence>
@@ -114,7 +115,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       messages: JSON.stringify(messages),
-      chat: chat,
+      chat: JSON.stringify(chat),
     },
   };
 }
