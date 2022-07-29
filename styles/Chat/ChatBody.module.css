@@ -114,7 +114,7 @@
 /* small mobile media query */
 @media screen and (max-width: 512px) {
   .chatInputContainer {
-    padding: var(--button-padding-medium) 0;
+    padding: var(--button-padding-medium) var(--padding-small);
   }
 
   .chatBodyContainer {
