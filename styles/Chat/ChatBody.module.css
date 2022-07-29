@@ -103,6 +103,14 @@
   filter: brightness(1.1);
 }
 
+/* mobile media query */
+@media screen and (max-width: 768px) {
+  .chatInputContainer {
+    position: fixed;
+    padding: var(--padding-small) var(--padding-small);
+  }
+}
+
 /* small mobile media query */
 @media screen and (max-width: 512px) {
   .chatInputContainer {
