@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { setDoc, doc, collection, orderBy, query, serverTimestamp, addDoc } from "firebase/firestore";
@@ -23,8 +23,21 @@ function ChatBody({ user, messages }) {
     scrollToLastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const sendMessage = (e) => {
-    e.preventDefault();
+  const checkIfEmpty = () => {
+    if (sendMessageInputRef.current.value.trim()) {
+      setIsSendButtonDisabled(false);
+      return false;
+    }
+
+    setIsSendButtonDisabled(true);
+    return true;
+  };
+
+  const sendMessage = () => {
+    console.log("sendMessage");
+    const isEmpty = checkIfEmpty();
+    if (isEmpty) return;
+
     const messageText = sendMessageInputRef.current.value;
 
     setDoc(
@@ -47,10 +60,6 @@ function ChatBody({ user, messages }) {
     });
   };
 
-  const checkIfEmpty = () => {
-    sendMessageInputRef.current.value ? setIsSendButtonDisabled(false) : setIsSendButtonDisabled(true);
-  };
-
   const showMessages = () => {
     if (messagesSnapshot) {
       return messagesSnapshot.docs.map((message) => {
@@ -69,7 +78,22 @@ function ChatBody({ user, messages }) {
         <Message key={message.id} user={user} sender={message.sender} message={message} styles={styles} />;
       });
     }
+
+    scrollToBottom();
   };
+
+  useEffect(() => {
+    let isFocused;
+
+    sendMessageInputRef.current.addEventListener("keyup", (e) => {
+      isFocused = document.activeElement === sendMessageInputRef.current;
+
+      if (e.key === "Enter" && isFocused) {
+        sendMessage();
+        return;
+      }
+    });
+  });
 
   return (
     <>

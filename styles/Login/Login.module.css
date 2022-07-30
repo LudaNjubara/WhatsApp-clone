@@ -6,6 +6,7 @@
   border-radius: var(--border-radius-small);
   padding: var(--padding-large) var(--padding-medium);
   background-color: var(--primary-background-accent);
+  box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.1);
 }
 
 .welcomeTitle {
