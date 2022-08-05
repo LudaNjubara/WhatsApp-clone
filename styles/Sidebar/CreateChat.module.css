@@ -1,0 +1,196 @@
+.createChatContainer {
+  position: absolute;
+  bottom: var(--padding-medium);
+  right: var(--padding-medium);
+  text-align: center;
+  z-index: 10;
+}
+
+.createChatButton {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-accent);
+  cursor: pointer;
+}
+
+.createChatButton.openSubitemsButton:hover,
+.createChatButton.openSubitemsButton:focus,
+.createChatButton.subitemButton:hover,
+.createChatButton.subitemButton:focus,
+.createChatButton.addPersonButton:hover,
+.createChatButton.addPersonButton:focus,
+.modalButton:hover,
+.modalButton:focus {
+  filter: brightness(1.1);
+}
+
+.createChatButton.openSubitemsButton {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+#openSubitemsButtonIcon {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.3s cubic-bezier(0.55, -0.55, 0.61, 1.69);
+}
+
+#openSubitemsButtonIcon.active {
+  transform: rotate(45deg);
+}
+
+.subitemsContainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.createChatButton.subitemButton {
+  width: 42px;
+  height: 42px;
+}
+
+.subitemButtonIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.createChatModal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--padding-medium);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.createChatModalInner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+  padding: var(--padding-medium);
+  border-radius: var(--border-radius-small);
+  background-color: var(--primary-background-accent);
+  box-shadow: inset 0 0 4px 2px rgba(0, 0, 0, 0.1);
+}
+
+.createChatInputContainer {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.createChatInput {
+  flex-grow: 1;
+  padding: var(--button-padding-medium) var(--button-padding-large);
+  border-radius: var(--border-radius-small);
+  background: none;
+  border: none;
+  outline: 1px solid var(--primary-accent);
+  box-shadow: inset 0 0 6px 3px rgba(0, 0, 0, 0.1);
+}
+
+.createChatButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-accent);
+  transition: filter 0.2s linear;
+}
+
+.modalGroupListTitle {
+  text-align: left;
+  padding-bottom: var(--button-padding-small);
+  font-weight: var(--font-weight-bold);
+}
+
+.modalGroupListContainer {
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 3px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.modalGroupListContainer::-webkit-scrollbar {
+  height: 5px;
+  background: none;
+}
+
+.modalGroupListContainer::-webkit-scrollbar-thumb {
+  background: rgba(18, 140, 126, 0.3);
+  border-radius: var(--border-radius-medium);
+}
+
+.modalGroupListItem {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: var(--button-padding-small) var(--button-padding-medium);
+  border-radius: var(--border-radius-small);
+  background-color: var(--secondary-background-accent);
+  scroll-snap-align: start;
+}
+
+.removePersonButton {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  background-color: var(--primary-accent);
+  cursor: pointer;
+}
+
+.removePersonIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.modalButtonsContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.modalButton {
+  flex-grow: 1;
+  padding: var(--button-padding-medium) var(--button-padding-medium);
+  border-radius: var(--border-radius-small);
+  background-color: var(--primary-accent);
+  font-weight: var(--font-weight-bold);
+  transition: filter 0.1s linear;
+}
+
+.modalButton[disabled] {
+  background-color: var(--secondary-background-accent);
+  pointer-events: none;
+}
+
+.modalButton .createChatIcon {
+  display: none;
+}
+
+.modalButton.isCloseButton {
+  background-color: var(--danger-accent);
+}
+
+/* mobile media query */
+@media screen and (max-width: 768px) {
+  .createChatContainer {
+    bottom: var(--padding-small);
+    right: var(--padding-small);
+  }
+}

@@ -50,7 +50,6 @@ function ChatRoom({ chat, messages }) {
   };
 
   const showChat = () => {
-    console.log("showChat", window.location.pathname);
     setIsChatVisible(true);
   };
 

@@ -12,7 +12,7 @@ function Chat({ chat, messages, hideChat }) {
   return (
     <>
       <div id={styles.chatHeaderWrapper}>
-        <ChatHeader user={user} chat={chat} hideChat={hideChat} />
+        <ChatHeader user={user} chat={chat} isGroupChat={chat.isGroup} hideChat={hideChat} />
       </div>
       <div id={styles.chatBodyWrapper}>
         <ChatBody user={user} chat={chat} messages={messages} />

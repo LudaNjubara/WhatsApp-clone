@@ -27,9 +27,6 @@ function SidebarHeader({ user }) {
       </div>
 
       <div className={styles.optionsContainer}>
-        <div type="button" className={styles.optionsButton}>
-          <BsFillChatLeftTextFill className={styles.optionsIcon} />
-        </div>
         <div type="button" className={styles.optionsButton} onClick={toggleThreeDotOptionsVisibility}>
           <BsThreeDotsVertical className={styles.optionsIcon} />
           <AnimatePresence>
