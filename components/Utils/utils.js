@@ -15,4 +15,22 @@ const getCSSVariableValue = (CSSVariable) => {
   return value;
 };
 
-export { getRecipientEmail, truncate, getCSSVariableValue };
+const generateRecipientColor = () => {
+  // create random vibrant color
+
+  const generateRandomColor = () => {
+    return Math.floor(Math.random() * 135 + 120);
+  };
+
+  const rgbToHex = (r, g, b) => {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  };
+
+  const r = generateRandomColor();
+  const g = generateRandomColor();
+  const b = generateRandomColor();
+
+  return rgbToHex(r, g, b);
+};
+
+export { getRecipientEmail, truncate, getCSSVariableValue, generateRecipientColor };

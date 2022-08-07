@@ -36,9 +36,9 @@ function ChatItem({ chatId, user, isGroupChat, participants, showChat, styles })
 
   const openChat = () => {
     //if user is already on the chat page, then just return
-    if (router.asPath.includes(chatId)) {
+    /*  if (router.asPath.includes(chatId)) {
       return;
-    }
+    } */
 
     router.push({
       pathname: `/chat/${chatId}`,

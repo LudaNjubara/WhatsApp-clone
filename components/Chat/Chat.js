@@ -15,7 +15,13 @@ function Chat({ chat, messages, hideChat }) {
         <ChatHeader user={user} chat={chat} isGroupChat={chat.isGroup} hideChat={hideChat} />
       </div>
       <div id={styles.chatBodyWrapper}>
-        <ChatBody user={user} chat={chat} messages={messages} />
+        <ChatBody
+          user={user}
+          chat={chat}
+          isGroupChat={chat.isGroup}
+          participants={chat.participants}
+          messages={messages}
+        />
       </div>
     </>
   );

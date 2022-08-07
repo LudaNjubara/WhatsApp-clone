@@ -1,17 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { setDoc, doc, collection, orderBy, query, serverTimestamp, addDoc } from "firebase/firestore";
 
 import { database } from "../firebaseConfig";
 import Message from "./Message";
+import { generateRecipientColor } from "../Utils/utils";
 
 import { AiOutlineSend } from "react-icons/ai";
 import styles from "../../styles/Chat/ChatBody.module.css";
 
-function ChatBody({ user, messages }) {
+function ChatBody({ user, messages, participants, isGroupChat }) {
   const router = useRouter();
   const { id } = router.query;
+
+  let recipientsWithColorsArray = [];
+
+  if (localStorage.getItem(`recipientColors - ${id}`)) {
+    recipientsWithColorsArray = JSON.parse(localStorage.getItem(`recipientColors - ${id}`));
+  } else {
+    // create object with participants colors and save it to local storage
+    participants.forEach((recipientEmail) => {
+      if (recipientEmail === user.email) return;
+
+      const color = generateRecipientColor();
+      recipientsWithColorsArray.push({ recipientEmail, color });
+    });
+
+    localStorage.setItem(`recipientColors - ${id}`, JSON.stringify(recipientsWithColorsArray));
+
+    // get the newly created object with participants colors from local storage
+    recipientsWithColorsArray = JSON.parse(localStorage.getItem(`recipientColors - ${id}`));
+  }
+
   const [isSendButtonDisabled, setIsSendButtonDisabled] = useState(true);
   const sendMessageInputRef = useRef(null);
   const scrollToLastMessageRef = useRef(null);
@@ -20,7 +41,7 @@ function ChatBody({ user, messages }) {
   );
 
   const scrollToBottom = () => {
-    scrollToLastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToLastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
   };
 
   const checkIfEmpty = () => {
@@ -33,8 +54,9 @@ function ChatBody({ user, messages }) {
     return true;
   };
 
-  const sendMessage = () => {
-    console.log("sendMessage");
+  const sendMessage = (e) => {
+    e.preventDefault();
+
     const isEmpty = checkIfEmpty();
     if (isEmpty) return;
 
@@ -50,10 +72,11 @@ function ChatBody({ user, messages }) {
 
     addDoc(collection(database, `chats/${id}/messages`), {
       timestamp: serverTimestamp(),
-      sender: user.email,
+      sender: [user.email, user.displayName],
       messageText: messageText,
       photoURL: user.photoURL,
     }).then(() => {
+      sendMessageInputRef.current.focus();
       sendMessageInputRef.current.value = "";
       setIsSendButtonDisabled(true);
       scrollToBottom();
@@ -66,8 +89,14 @@ function ChatBody({ user, messages }) {
         return (
           <Message
             key={message.id}
+            isGroupChat={isGroupChat}
             user={user}
-            sender={message.data().sender}
+            sender={message.data().sender[1] ?? message.data().sender[0]}
+            senderColor={
+              recipientsWithColorsArray.find(
+                (recipient) => recipient.recipientEmail === message.data().sender[0]
+              )?.color
+            }
             message={{ ...message.data(), timestamp: message.data().timestamp?.toDate().getTime() }}
             styles={styles}
           />
@@ -75,25 +104,31 @@ function ChatBody({ user, messages }) {
       });
     } else if (messages) {
       return JSON.parse(messages).map((message) => {
-        <Message key={message.id} user={user} sender={message.sender} message={message} styles={styles} />;
+        <Message
+          key={message.id}
+          user={user}
+          sender={message.sender[1] ?? message.sender[0]}
+          senderColor={
+            recipientsWithColorsArray.find((recipient) => recipient.recipientEmail === message.sender[0])
+              ?.color
+          }
+          isGroupChat={isGroupChat}
+          message={message}
+          styles={styles}
+        />;
       });
     }
-
-    scrollToBottom();
   };
 
   useEffect(() => {
-    let isFocused;
+    scrollToBottom();
 
-    sendMessageInputRef.current.addEventListener("keyup", (e) => {
-      isFocused = document.activeElement === sendMessageInputRef.current;
+    localStorage.clear();
 
-      if (e.key === "Enter" && isFocused) {
-        sendMessage();
-        return;
-      }
-    });
-  });
+    //check if participants already have their colors assigned to them
+    // if so, just get the object containing the info, otherwise generate a new color for each
+    //participant and save it to local storage as a new object
+  }, []);
 
   return (
     <>
@@ -103,7 +138,7 @@ function ChatBody({ user, messages }) {
           <div ref={scrollToLastMessageRef}></div>
         </div>
       </div>
-      <div className={styles.chatInputContainer}>
+      <form onSubmit={sendMessage} className={styles.chatInputContainer}>
         <input
           type="text"
           ref={sendMessageInputRef}
@@ -111,15 +146,10 @@ function ChatBody({ user, messages }) {
           placeholder="Type a message..."
           onChange={checkIfEmpty}
         />
-        <button
-          type="button"
-          className={styles.sendMessageButton}
-          disabled={isSendButtonDisabled}
-          onClick={sendMessage}
-        >
+        <button type="submit" className={styles.sendMessageButton} disabled={isSendButtonDisabled}>
           <AiOutlineSend className={styles.sendMessageChatIcon} />
         </button>
-      </div>
+      </form>
     </>
   );
 }

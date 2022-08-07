@@ -15,6 +15,7 @@
   --terniary-accent: #25d366;
   --quaternary-accent: #34b7f1;
   --danger-accent: #b81c1c;
+  --warning-accent: #ffa033;
 
   /* Text Colors */
   --primary-text-accent: #272727;
@@ -155,7 +156,9 @@ h5 {
     --secondary-accent: #075e54;
     --terniary-accent: #25d366;
     --quaternary-accent: #34b7f1;
+
     --danger-accent: #b81c1c;
+    --warning-accent: #ffa033;
 
     /* Text Colors */
     --primary-text-accent: #f3f3f3;

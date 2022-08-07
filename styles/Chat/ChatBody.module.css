@@ -43,6 +43,17 @@
   margin-left: auto;
 }
 
+.messageAuthor {
+  font-weight: var(--font-weight-bolder);
+  font-size: var(--font-size-default-small);
+  letter-spacing: 0.3px;
+  /*  color: var(--warning-accent); */
+}
+
+.chatBodyMessageContainer.isUserMessage > .messageAuthor {
+  display: none;
+}
+
 .chatBodyMessage {
   -ms-word-break: break-all;
   word-break: break-all;
