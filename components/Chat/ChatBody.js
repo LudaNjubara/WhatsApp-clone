@@ -103,7 +103,7 @@ function ChatBody({ user, messages, participants, isGroupChat }) {
         );
       });
     } else if (messages) {
-      return JSON.parse(messages).map((message) => {
+      return messages.map((message) => {
         <Message
           key={message.id}
           user={user}

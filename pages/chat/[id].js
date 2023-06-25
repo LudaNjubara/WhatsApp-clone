@@ -16,7 +16,6 @@ function ChatRoom({ chat, messages }) {
   const [user] = useAuthState(auth);
   const [isMobile, setIsMobile] = useState(!!(window.innerWidth < 768));
   const [isChatVisible, setIsChatVisible] = useState(true);
-  const parsedChat = chat && JSON.parse(chat);
   let chatVariants;
 
   window.addEventListener("resize", () => {
@@ -56,7 +55,7 @@ function ChatRoom({ chat, messages }) {
   return (
     <>
       <Head>
-        <title>Chat with {getRecipientEmail(user, parsedChat?.participants)}</title>
+        <title>Chat with {getRecipientEmail(user, chat.participants)}</title>
       </Head>
 
       <div id={styles.mainWindowWrapper}>
@@ -73,7 +72,7 @@ function ChatRoom({ chat, messages }) {
               animate="visible"
               exit="exit"
             >
-              <Chat chat={parsedChat} messages={messages} hideChat={hideChat} />
+              <Chat chat={chat} messages={messages} hideChat={hideChat} />
             </motion.section>
           )}
         </AnimatePresence>
@@ -91,30 +90,23 @@ export async function getServerSideProps(context) {
     query(collection(chatRoomFirestoreRef, "messages"), orderBy("timestamp", "asc"))
   );
 
-  const messages = messagesRes.docs
-    .map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data(),
-      };
-    })
-    .map((messages) => {
-      return {
-        ...messages,
-        timestamp: messages.timestamp.toDate().getTime(),
-      };
-    });
+  const messages = messagesRes.docs.map((doc) => {
+    const { timestamp, ...data } = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      timestamp: timestamp.toDate().getTime(),
+    };
+  });
 
   const chatRes = await getDoc(chatRoomFirestoreRef);
-  const chat = {
-    id: chatRes.id,
-    ...chatRes.data(),
-  };
+  const { id, ...chatData } = chatRes.data();
+  const chat = { id: chatRes.id, ...chatData };
 
   return {
     props: {
-      messages: JSON.stringify(messages),
-      chat: JSON.stringify(chat),
+      messages,
+      chat,
     },
   };
 }
